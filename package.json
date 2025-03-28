@@ -21,17 +21,11 @@
     "@azure/identity": "^4.8.0",
     "@azure/service-bus": "^7.9.5",
     "@azure/storage-blob": "^12.27.0",
-    "@google-cloud/aiplatform": "^3.35.0",
-    "@google-cloud/vertexai": "^1.9.3",
     "@prisma/client": "^6.4.1",
     "@prisma/extension-accelerate": "^1.2.2",
     "@prisma/extension-optimize": "^1.1.8",
     "@prisma/instrumentation": "^6",
-    "discord.js": "^14.18.0",
-    "google-auth-library": "^9.15.1",
-    "microsoft-cognitiveservices-speech-sdk": "^1.43.0",
     "node-fetch": "^3.3.2",
-    "openai": "^4.85.3",
     "ws": "^8.18.1"
   },
   "devDependencies": {
