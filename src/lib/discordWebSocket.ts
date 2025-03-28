@@ -34,6 +34,7 @@ export class DiscordWebSocket {
     private intents = (1 << 0) | (1 << 1) | (1 << 9) | (1 << 10) | (1 << 12) | (1 << 13) | (1 << 15),
     private reconnectionUrl: string | null = null
   ) {
+    subscribeMessage(this.sendResponse.bind(this));
     this.connect();
   }
 
@@ -49,7 +50,6 @@ export class DiscordWebSocket {
     this.discord.on('message', this.onMessage.bind(this));
     this.discord.on('close', this.onClose.bind(this));
     this.discord.on('error', this.onError.bind(this));
-    subscribeMessage(this.sendResponse.bind(this));
   }
 
   private onOpen() {

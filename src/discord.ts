@@ -18,6 +18,9 @@
 // @date   Created on March 27 2025, 15:34 -07:00
 */
 
+import dotenv from "dotenv";
+dotenv.config();
+
 import { DiscordWebSocket } from './lib/discordWebSocket';
 
 // Import credentials
