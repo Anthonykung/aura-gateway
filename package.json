@@ -19,10 +19,12 @@
     "@azure/identity": "^4.8.0",
     "@azure/service-bus": "^7.9.5",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "node-fetch": "^3.3.2",
     "ws": "^8.18.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "@types/node": "^22.13.5",
     "@types/ws": "^8.5.14",
     "ts-node": "^10.9.2",

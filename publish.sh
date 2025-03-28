@@ -125,4 +125,32 @@ az containerapp update \
     AZURE_SERVICE_BUS_CONNECTION_STRING=secretref:azure-service-bus-connection-string
 if [ $? -ne 0 ]; then echo -e "\033[31mContainer App deployment failed\033[0m"; exit 1; fi
 
+# Update health probes
+echo -e "\033[38;2;255;182;193mUpdating health probe\033[0m"
+az containerapp probe update \
+  --name "$AZURE_CONTAINER_APP" \
+  --resource-group "$AZURE_RESOURCE_GROUP" \
+  --type Liveness \
+  --http-get-path /liveness \
+  --http-get-port 3000 \
+  --initial-delay-seconds 0 \
+  --period-seconds 10 \
+  --timeout-seconds 1 \
+  --success-threshold 1 \
+  --failure-threshold 3
+if [ $? -ne 0 ]; then echo -e "\033[31mFailed to update liveness probe\033[0m"; exit 1; fi
+
+az containerapp probe update \
+  --name "$AZURE_CONTAINER_APP" \
+  --resource-group "$AZURE_RESOURCE_GROUP" \
+  --type Readiness \
+  --http-get-path /readiness \
+  --http-get-port 3000 \
+  --initial-delay-seconds 0 \
+  --period-seconds 10 \
+  --timeout-seconds 1 \
+  --success-threshold 1 \
+  --failure-threshold 3
+if [ $? -ne 0 ]; then echo -e "\033[31mFailed to update readiness probe\033[0m"; exit 1; fi
+
 echo -e "\033[38;2;136;223;142mDeployment complete!\033[0m"

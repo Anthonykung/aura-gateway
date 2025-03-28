@@ -23,6 +23,8 @@ dotenv.config();
 
 import { DiscordWebSocket } from './lib/discordWebSocket';
 
+import express, { Request, Response } from 'express';
+
 // Import credentials
 const { DISCORD_TOKEN } = process.env;
 
@@ -36,3 +38,17 @@ const gatewayUrl = 'wss://gateway.discord.gg/?v=10&encoding=json';
 // Establish a new WebSocket connection
 const discordWebSocket = new DiscordWebSocket(gatewayUrl, DISCORD_TOKEN as string);
 
+const app = express();
+
+app.get('/liveness', (req: Request, res: Response) => {
+  res.status(200).send('OK')
+});
+
+app.get('/readiness', (req: Request, res: Response) => {
+  res.status(discordWebSocket.getConnectionStatus() ? 200 : 503).send(discordWebSocket.getConnectionStatus() ? 'OK' : 'Not ready')
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+});

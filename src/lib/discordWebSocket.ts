@@ -27,6 +27,7 @@ export class DiscordWebSocket {
   private sequenceNumber: number | null = null;
   private reconnectionAttempts = 0;
   private reconnectInterval: NodeJS.Timeout | null = null;
+  private connectionStatus = false;
 
   constructor(
     private url: string,
@@ -54,6 +55,7 @@ export class DiscordWebSocket {
 
   private onOpen() {
     console.log('Connected to Discord Gateway');
+    this.connectionStatus = true;
     const payload = this.reconnectionUrl
       ? { op: 6, d: { token: this.token, session_id: this.sessionId, seq: this.sequenceNumber } }
       : {
@@ -96,8 +98,13 @@ export class DiscordWebSocket {
 
   private sendResponse(data: string) {
     try {
-      this.discord?.send(data);
-      return true;
+      const payload = JSON.parse(data);
+      if (payload.success) {
+        this.discord?.send(payload.body);
+        return true;
+      }
+      console.error('Failed to send response:', payload.body);
+      return false;
     } catch (error) {
       console.error('Failed to send response:', error);
       return false;
@@ -106,6 +113,7 @@ export class DiscordWebSocket {
 
   private onClose() {
     console.log('Disconnected from Discord Gateway');
+    this.connectionStatus = false;
     if (this.reconnectInterval) clearInterval(this.reconnectInterval);
     this.connect();
   }
@@ -118,5 +126,9 @@ export class DiscordWebSocket {
   private resetReconnection() {
     this.reconnectionUrl = null;
     this.reconnectionAttempts = 0;
+  }
+
+  public getConnectionStatus() {
+    return this.connectionStatus;
   }
 }
