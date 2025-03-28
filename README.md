@@ -17,6 +17,8 @@ Azure Function Relay
       ⬇
 AURA Processing API
       ⬇
+Azure Function Relay
+      ⬇
 Azure Service Bus
       ⬇
 AURA Gateway → Discord Client
