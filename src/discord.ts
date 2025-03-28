@@ -27,5 +27,5 @@ const { DISCORD_TOKEN } = process.env;
 const gatewayUrl = 'wss://gateway.discord.gg/?v=10&encoding=json';
 
 // Establish a new WebSocket connection
-// const discordWebSocket = new DiscordWebSocket(gatewayUrl, DISCORD_TOKEN as string);
+const discordWebSocket = new DiscordWebSocket(gatewayUrl, DISCORD_TOKEN as string);
 
