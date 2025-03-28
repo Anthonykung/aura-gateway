@@ -99,6 +99,7 @@ export class DiscordWebSocket {
   private sendResponse(data: string) {
     try {
       const payload = JSON.parse(data);
+      console.log('Sending response:', payload);
       if (payload.success) {
         this.discord?.send(payload.body);
         return true;

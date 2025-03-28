@@ -93,6 +93,8 @@ The script will:
 
 - 🤖 Some parts of this project were written with the help of **GitHub Copilot VS Code Extension**, so you may encounter code that's unconventional or quirky, but hey it works and it cuts down the development time 😉
 
+- Yes there are more elegant ways to handle the Azure Service Bus connection, but well it's fast and easy so... 🤷‍♂️
+
 - This gateway is designed to be part of a scalable, event-driven ecosystem and relies heavily on Azure and Discord services.
 
 ## 📄 License

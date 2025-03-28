@@ -1,0 +1,19 @@
+probes:
+  - type: Liveness
+    httpGet:
+      path: /liveness
+      port: 3000
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  - type: Readiness
+    httpGet:
+      path: /readiness
+      port: 3000
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
