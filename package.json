@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "dist/discord.js",
   "scripts": {
-    "build": "npx prisma generate && tsc",
+    "build": "tsc",
     "start": "node dist/discord.js",
-    "dev": "npx prisma generate --no-engine && tsc && node dist/discord.js"
+    "dev": "tsc && node dist/discord.js"
   },
   "author": {
     "name": "Anthony Kung",
@@ -16,22 +16,15 @@
   "description": "",
   "packageManager": "yarn@1.22.22",
   "dependencies": {
-    "@azure-rest/ai-content-safety": "^1.0.1",
-    "@azure/eventgrid": "^5.11.0",
     "@azure/identity": "^4.8.0",
     "@azure/service-bus": "^7.9.5",
-    "@azure/storage-blob": "^12.27.0",
-    "@prisma/client": "^6.4.1",
-    "@prisma/extension-accelerate": "^1.2.2",
-    "@prisma/extension-optimize": "^1.1.8",
-    "@prisma/instrumentation": "^6",
+    "dotenv": "^16.4.7",
     "node-fetch": "^3.3.2",
     "ws": "^8.18.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
     "@types/ws": "^8.5.14",
-    "prisma": "^6.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3"

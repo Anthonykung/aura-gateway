@@ -93,4 +93,36 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo -e "\033[38;2;136;223;142mComplete\033[0m"
+# Uploading env to container secrets
+echo -e "\033[38;2;255;182;193mUploading environment variables to Azure Key Vault\033[0m"
+az containerapp secret set \
+  --name "$AZURE_CONTAINER_APP" \
+  --resource-group "$AZURE_RESOURCE_GROUP" \
+  --secrets \
+    database-url="$DATABASE_URL" \
+    direct-url="$DIRECT_URL" \
+    discord-client-id="$DISCORD_CLIENT_ID" \
+    discord-token="$DISCORD_TOKEN" \
+    azure-service-bus-connection-string="$AZURE_SERVICE_BUS_CONNECTION_STRING"
+if [ $? -ne 0 ]; then echo -e "\033[31mFailed to upload environment variables to Azure Key Vault\033[0m"; exit 1; fi
+
+# Deploy to Azure Container App
+echo -e "\033[38;2;255;182;193mDeploying to Azure Container App\033[0m"
+az containerapp update \
+  --name "$AZURE_CONTAINER_APP" \
+  --resource-group "$AZURE_RESOURCE_GROUP" \
+  --image "$ACR_IMAGE:$VERSION" \
+  --min-replicas 1 \
+  --max-replicas 4 \
+  --cpu 1 \
+  --memory 2.0Gi \
+  --set-env-vars \
+    DATABASE_URL=secretref:database-url \
+    DIRECT_URL=secretref:direct-url \
+    DISCORD_CLIENT_ID=secretref:discord-client-id \
+    DISCORD_TOKEN=secretref:discord-token \
+    AURA_VERSION=$VERSION \
+    AZURE_SERVICE_BUS_CONNECTION_STRING=secretref:azure-service-bus-connection-string
+if [ $? -ne 0 ]; then echo -e "\033[31mContainer App deployment failed\033[0m"; exit 1; fi
+
+echo -e "\033[38;2;136;223;142mDeployment complete!\033[0m"

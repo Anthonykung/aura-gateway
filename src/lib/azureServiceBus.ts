@@ -18,13 +18,18 @@
 // @date   Created on March 27 2025, 15:33 -07:00
 */
 
+import dotenv from "dotenv";
+dotenv.config();
 
 import type { ServiceBusMessage, ServiceBusMessageBatch } from "@azure/service-bus";
 import { ServiceBusClient } from "@azure/service-bus";
-import { DefaultAzureCredential } from "@azure/identity";
 
 // Define the connection string
 const connectionString = process.env.AZURE_SERVICE_BUS_CONNECTION_STRING as string;
+
+if (!connectionString) {
+  throw new Error("Azure Service Bus connection string is missing");
+}
 
 // Create a Service Bus client using the connection string to the Service Bus namespace
 const sbClient = new ServiceBusClient(connectionString);

@@ -23,6 +23,10 @@ import { DiscordWebSocket } from './lib/discordWebSocket';
 // Import credentials
 const { DISCORD_TOKEN } = process.env;
 
+if (!DISCORD_TOKEN) {
+  throw new Error('Discord token is missing');
+}
+
 // Discord API version 10 gateway URL
 const gatewayUrl = 'wss://gateway.discord.gg/?v=10&encoding=json';
 
